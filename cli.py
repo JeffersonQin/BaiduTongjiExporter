@@ -124,5 +124,35 @@ def fetch_all(ctx, access_token, path, start_date: click.DateTime, end_date: cli
 		start_date = start_date + datetime.timedelta(days=1)
 
 
+@cli.command()
+@click.option('--refresh-token', '-r', default=None, help='Refresh token')
+@click.option('--api-key', '-k', default=None, help='API key')
+@click.option('--secret-key', '-s', default=None, help='Secret key')
+def refresh_token(refresh_token, api_key, secret_key):
+	'''refresh access token: output refresh token in the first line, access token in the second line'''
+	if refresh_token is None:
+		refresh_token = os.environ.get('BAIDU_TONGJI_REFRESH_TOKEN')
+	if refresh_token is None:
+		raise click.ClickException('Refresh token is required')
+
+	if api_key is None:
+		api_key = os.environ.get('BAIDU_TONGJI_API_KEY')
+	if api_key is None:
+		raise click.ClickException('API key is required')
+
+	if secret_key is None:
+		secret_key = os.environ.get('BAIDU_TONGJI_SECRET_KEY')
+	if secret_key is None:
+		raise click.ClickException('Secret key is required')
+
+	res = baidutongji.refreshAccessToken(api_key, secret_key, refresh_token)
+
+	refresh_token = res['refresh_token']
+	access_token = res['access_token']
+
+	# output
+	click.echo(f'{refresh_token}\n{access_token}')
+
+
 if __name__ == '__main__':
 	cli()

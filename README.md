@@ -56,6 +56,8 @@
 
 ## 使用方法
 
+**所有的 SECRETS / TOKEN 都可以通过环境变量传递**
+
 处理北京时间昨天的数据：
 
 ```
@@ -89,4 +91,20 @@ Options:
 
 ```bash
 pip install -r requirements.txt
+```
+
+刷新 Token (具体内容详见百度统计文档):
+
+```
+> python .\cli.py refresh-token --help
+Usage: cli.py refresh-token [OPTIONS]
+
+  refresh access token: output refresh token in the first line, access token
+  in the second line
+
+Options:
+  -r, --refresh-token TEXT  Refresh token
+  -k, --api-key TEXT        API key
+  -s, --secret-key TEXT     Secret key
+  --help                    Show this message and exit.
 ```
