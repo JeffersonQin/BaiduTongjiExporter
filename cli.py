@@ -52,9 +52,12 @@ def fetch(access_token, path, date):
 
 		date = datetime.date(beijing_now.year, beijing_now.month, beijing_now.day)
 		date = date - datetime.timedelta(days=1)
+
+		real_time = True
 	# 指定日期
 	else:
 		date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+		real_time = False
 
 	cron_week = (date.weekday() == 6)
 	cron_month = ((date + datetime.timedelta(days=1)).day == 1)
@@ -88,7 +91,7 @@ def fetch(access_token, path, date):
 
 		save_all(access_token, site_id, date, date, yesterday, yesterday, day_path)
 
-		if date is None:
+		if real_time:
 			# 实时访客
 			day_path = os.path.join(domain_path, f'day/{(date + datetime.timedelta(days=1)).strftime("%Y%m%d")}')
 			print(f'Saving realtime report to {day_path}')
