@@ -20,7 +20,7 @@ jobs:
     - name: Clone Baidu Tongji Exporter
       uses: actions/checkout@v2
       with:
-        repository: JeffersonQin/BaiduTongjiExporter
+        repository: ${{ github.repository }}
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
