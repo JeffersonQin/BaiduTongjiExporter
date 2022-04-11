@@ -1,9 +1,12 @@
 name: Daily Export of Baidu Tongji Data
 
 on:
-  push:
   schedule:
-    - cron: '0 11 * * *' # UTC Time, Beijing Time: 19:00
+    - cron: '30 11 * * *' # UTC Time, Beijing Time: 19:30
+  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   export:
