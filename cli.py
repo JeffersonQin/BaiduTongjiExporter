@@ -93,8 +93,7 @@ def fetch(access_token, path, date):
 			day_path = os.path.join(domain_path, f'day/{(date + datetime.timedelta(days=1)).strftime("%Y%m%d")}')
 			print(f'Saving realtime report to {day_path}')
 			os.makedirs(day_path, exist_ok=True)
-			save_report(baidutongji.getTrendLatest(access_token, site_id, baidutongji.TrendLatestMetrics().setAllTrue()), 'trend-latest', 
-				day_path)
+			save_report(baidutongji.getTrendLatest(access_token, site_id, baidutongji.TrendLatestMetrics().setAllTrue()), f'trend-latest-{beijing_now.strftime("%H-%M-%S-UTC+8")}', day_path)
 
 		# week
 		if cron_week:
