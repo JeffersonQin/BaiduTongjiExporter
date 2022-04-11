@@ -1,0 +1,61 @@
+name: Refresh Baidu Tongji Tokens
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 1'
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Add Mask
+      run: |
+        echo "::add-mask::${{ secrets.BAIDU_TONGJI_REFRESH_TOKEN }}"
+        echo "::add-mask::${{ secrets.BAIDU_TONGJI_ACCESS_TOKEN }}"
+        echo "::add-mask::${{ secrets.BAIDU_TONGJI_API_KEY }}"
+        echo "::add-mask::${{ secrets.BAIDU_TONGJI_SECRET_KEY }}"
+        echo "::add-mask::${{ secrets.REPO_ACCESS_TOKEN }}"
+    - name: Clone Baidu Tongji Exporter
+      uses: actions/checkout@v2
+      with:
+        repository: JeffersonQin/BaiduTongjiExporter
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Refresh Tokens
+      id: refresh
+      env:
+        BAIDU_TONGJI_REFRESH_TOKEN: ${{ secrets.BAIDU_TONGJI_REFRESH_TOKEN }}
+        BAIDU_TONGJI_API_KEY: ${{ secrets.BAIDU_TONGJI_API_KEY }}
+        BAIDU_TONGJI_SECRET_KEY: ${{ secrets.BAIDU_TONGJI_SECRET_KEY }}
+      run: |
+        python cli.py refresh-token > tokens.key
+        refresh_token=`sed '1q;d' tokens.key`
+        access_token=`sed '2q;d' tokens.key`
+        echo "::add-mask::$refresh_token"
+        echo "::add-mask::$access_token"
+        echo "Refresh token: $refresh_token"
+        echo "Access token: $access_token"
+        echo "::set-output name=REFRESH_TOKEN::$refresh_token"
+        echo "::set-output name=ACCESS_TOKEN::$access_token"
+    - name: Update Refresh Token
+      uses: hmanzur/actions-set-secret@v2.0.0
+      with:
+        name: 'BAIDU_TONGJI_REFRESH_TOKEN'
+        value: ${{ steps.refresh.outputs.REFRESH_TOKEN }}
+        repository: ${{ github.repository }}
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+    - name: Update Access Token
+      uses: hmanzur/actions-set-secret@v2.0.0
+      with:
+        name: 'BAIDU_TONGJI_ACCESS_TOKEN'
+        value: ${{ steps.refresh.outputs.ACCESS_TOKEN }}
+        repository: ${{ github.repository }}
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
