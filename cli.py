@@ -3,6 +3,7 @@ import click
 import os
 import datetime
 import json
+import time
 
 
 @click.group()
@@ -17,18 +18,43 @@ def save_report(report, name, path):
 
 def save_all(access_token, site_id, start_date, end_date, start_date2, end_date2, path):
 	save_report(baidutongji.getTimeTrendRpt(access_token, site_id, start_date, end_date, baidutongji.TimeTrendRptMetrics().setAllTrue()), 'overview-getTimeTrendRpt', path)
+	print('Time Trend Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getDistrictRpt(access_token, site_id, start_date, end_date, baidutongji.DistrictRptMetrics().setAllTrue()), 'overview-getDistrictRpt', path)
+	print('District Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getCommonTrackRpt(access_token, site_id, start_date, end_date, baidutongji.CommonTrackRptMetrics().setAllTrue()), 'overview-getCommonTrackRpt', path)
+	print('Common Track Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getTrendTime(access_token, site_id, start_date, end_date, baidutongji.TrendTimeMetrics().setAllTrue(), start_date2, end_date2), 'trend-time', path)
+	print('Time Trend Finished')
+	time.sleep(5)
 	save_report(baidutongji.getSourceAll(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'source-all', path)
+	print('Source Report (All) Finished')
+	time.sleep(5)
 	save_report(baidutongji.getSourceEngine(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'source-engine', path)
+	print('Source Engine Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getSourceSearchword(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'source-searchword', path)
+	print('Source Searchword Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getSourceLink(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'source-link', path)
+	print('Source Link Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getVisitToppage(access_token, site_id, start_date, end_date, baidutongji.VisitToppageMetrics().setAllTrue(), start_date2, end_date2), 'visit-toppage', path)
+	print('Top Page Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getVisitLandingpage(access_token, site_id, start_date, end_date, baidutongji.VisitLandingpageMetrics().setAllTrue(), start_date2, end_date2), 'visit-landingpage', path)
+	print('Landing Page Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getVisitTopdomain(access_token, site_id, start_date, end_date, baidutongji.VisitTopdomainMetrics().setAllTrue(), start_date2, end_date2), 'visit-topdomain', path)
+	print('Top Domain Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getVisitDistrict(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'visit-district', path)
+	print('District Report Finished')
+	time.sleep(5)
 	save_report(baidutongji.getVisitWorld(access_token, site_id, start_date, end_date, baidutongji.SourceMetrics().setAllTrue(), start_date2, end_date2), 'visit-world', path)
+	print('World Report Finished')
 
 
 @cli.command()
