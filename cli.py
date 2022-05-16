@@ -130,6 +130,7 @@ def fetch(access_token, path, date):
 			week_path = os.path.join(domain_path, f'week/{this_week_start.strftime("%Y%m%d")}-{this_week_end.strftime("%Y%m%d")}')
 			print(f'Saving week report to {week_path}')
 			os.makedirs(week_path, exist_ok=True)
+			time.sleep(60)
 			save_all(access_token, site_id, this_week_start, this_week_end, last_week_start, last_week_end, week_path)
 
 		# month
@@ -137,6 +138,7 @@ def fetch(access_token, path, date):
 			month_path = os.path.join(domain_path, f'month/{this_month_start.strftime("%Y%m%d")}-{this_month_end.strftime("%Y%m%d")}')
 			print(f'Saving month report to {month_path}')
 			os.makedirs(month_path, exist_ok=True)
+			time.sleep(60)
 			save_all(access_token, site_id, this_month_start, this_month_end, last_month_start, last_month_end, month_path)
 
 
