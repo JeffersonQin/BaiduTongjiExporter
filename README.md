@@ -119,10 +119,11 @@ Options:
 
 ## GitHub Actions 使用方法
 
-Github Actions 有两个：
+Github Actions 有三个：
 
 * `refresh_token`: 用于自动刷新百度统计 `ACCESS_TOKEN` 和 `REFRESH_TOKEN`，UTC 时间每周一凌晨执行
 * `cron_export`: 用于每日自动导出数据，会自动检测是否为周初以及月初，并执行相应的自动导出任务
+* `manual_export`: 用于手动导出指定日期，用于补救某些日期 action failed 但是没有重试，或者 cron 因为系统错误未正确发起的情况
 
 首先需要明确：导出的数据并非存储在本仓库，我自己是另行指定了一个 Private Repo。为了让自己的 GitHub 的 Activity History 不至于太难看，我还建了一个 Github 的小号，充当 bot。Action 可以指定 bot 的用户名与邮箱。
 
