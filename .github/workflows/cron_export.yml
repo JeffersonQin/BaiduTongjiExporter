@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: '30 11 * * *' # UTC Time, Beijing Time: 19:30
   workflow_dispatch:
-  push:
-    branches:
-      - master
 
 jobs:
   export:
